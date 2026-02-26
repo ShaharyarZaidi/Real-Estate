@@ -226,10 +226,7 @@ enquiryForm.addEventListener("submit", (event) => {
   const payload = buildEnquiryPayload(formData, currentEnquirySource);
   trackWebEngageEvent("Enquire Now Form Filled", payload);
 
-  successMsg.textContent = "Thank you. Your enquiry has been submitted successfully.";
-  enquiryForm.reset();
-  captchaInput.value = "";
-  setCaptcha();
+  window.location.href = "thank-you.html";
 });
 
 setCaptcha();
