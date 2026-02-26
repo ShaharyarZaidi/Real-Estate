@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acme Realty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script id="_webengage_script_tag" type="text/javascript">
+      var webengage;
+      !(function (w, e, b) {
+        function o(e2, t) {
+          e2[t[t.length - 1]] = function () {
+            r.__queue.push([t.join("."), arguments]);
+          };
+        }
+        var i;
+        var s;
+        var r = w[b];
+        var z = " ";
+        var l = "init options track screen onReady".split(z);
+        var a = "feedback survey notification".split(z);
+        var c = "options render clear abort".split(z);
+        var p = "Open Close Submit Complete View Click".split(z);
+        var u = "identify login logout setAttribute".split(z);
+        if (!r || !r.__v) {
+          for (
+            w[b] = r = { __queue: [], is_spa: 0, __v: "6.0", user: {} }, i = 0;
+            i < l.length;
+            i++
+          ) {
+            o(r, [l[i]]);
+          }
+          for (i = 0; i < a.length; i++) {
+            for (r[a[i]] = {}, s = 0; s < c.length; s++) {
+              o(r[a[i]], [a[i], c[s]]);
+            }
+            for (s = 0; s < p.length; s++) {
+              o(r[a[i]], [a[i], "on" + p[s]]);
+            }
+          }
+          for (i = 0; i < u.length; i++) {
+            o(r.user, ["user", u[i]]);
+          }
+          setTimeout(function () {
+            var f = e.createElement("script");
+            var d = e.getElementById("_webengage_script_tag");
+            f.type = "text/javascript";
+            f.async = true;
+            f.src =
+              (e.location.protocol === "https:"
+                ? "https://ssl.widgets.webengage.com"
+                : "http://cdn.widgets.webengage.com") + "/js/webengage-min-v-6.0.js";
+            d.parentNode.insertBefore(f, d);
+          });
+        }
+      })(window, document, "webengage");
+
+      webengage.init("~2024a992");
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="top-nav" aria-label="Main navigation">
+        <ul class="nav-list left">
+          <li><a href="#">ABOUT US</a></li>
+          <li><a href="#">OUR PROJECTS</a></li>
+          <li><a href="#">MEDIA</a></li>
+          <li><a href="#">ACME VENTURES</a></li>
+        </ul>
+
+        <div class="brand-block" aria-label="Acme Realty">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="brand-name">Acme Realty</div>
+          <div class="brand-sub">A Part of Acme Ventures</div>
+        </div>
+
+        <ul class="nav-list right">
+          <li><a href="#">JOINT VENTURE</a></li>
+          <li><a href="#">CAREERS</a></li>
+          <li><a href="#">BLOGS</a></li>
+          <li><a href="#">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <h1>CELEBRATING A CULTURE BUILT<br />ON CORE VALUES</h1>
+        <p class="divider">- - -</p>
+        <p class="hero-copy">
+          We are proud to announce that Acme Realty has been recognised among India's
+          <strong>Top 29 Great Mid-Size Workplaces and Best Workplaces in Real Estate</strong>
+          to work for.
+        </p>
+
+        <div class="awards-grid" aria-label="Awards and recognitions">
+          <article class="award-card award-yellow">
+            <img src="assets/award-1.svg" alt="Best Workplaces Innovation placeholder" />
+            <div class="award-placeholder">Award Placeholder 1</div>
+          </article>
+          <article class="award-card award-red">
+            <img src="assets/award-2.svg" alt="Great Place to Work Certified placeholder" />
+            <div class="award-placeholder">Award Placeholder 2</div>
+          </article>
+          <article class="award-card award-blue">
+            <img src="assets/award-3.svg" alt="Great Mid-size Workplaces placeholder" />
+            <div class="award-placeholder">Award Placeholder 3</div>
+          </article>
+          <article class="award-card award-cyan">
+            <img src="assets/award-4.svg" alt="Best Workplaces for Women placeholder" />
+            <div class="award-placeholder">Award Placeholder 4</div>
+          </article>
+          <article class="award-card award-purple">
+            <img src="assets/award-5.svg" alt="Best Workplaces for Millennials placeholder" />
+            <div class="award-placeholder">Award Placeholder 5</div>
+          </article>
+          <article class="award-card award-orange">
+            <img src="assets/award-6.svg" alt="Best Workplaces in Real Estate placeholder" />
+            <div class="award-placeholder">Award Placeholder 6</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-pad">
+        <h2>ACME REALTY: A GLANCE</h2>
+      </section>
+    </main>
+
+    <button id="openEnquirySide" class="side-enquire" aria-label="Open enquiry form">
+      ENQUIRE NOW
+    </button>
+
+    <button class="floating-chat" aria-label="Chat with us">
+      <span aria-hidden="true">●</span>
+    </button>
+
+    <footer class="bottom-actions" aria-label="Quick contact actions">
+      <button id="openEnquiry" class="action-item" type="button">ENQUIRY</button>
+      <a href="tel:+917413993399" class="action-item">CALL</a>
+      <a href="https://wa.me/917413993399" class="action-item" target="_blank" rel="noopener">WHATSAPP</a>
+      <a href="#" class="action-item">CONTACT US</a>
+    </footer>
+
+    <div id="modalOverlay" class="modal-overlay" hidden></div>
+
+    <section
+      id="enquiryModal"
+      class="enquiry-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="enquiryTitle"
+      hidden
+    >
+      <button id="closeEnquiry" class="close-btn" type="button" aria-label="Close enquiry form">&times;</button>
+      <h2 id="enquiryTitle">Enquire Now</h2>
+
+      <form id="enquiryForm" novalidate>
+        <label class="sr-only" for="projectSelect">Project</label>
+        <select id="projectSelect" name="project" required>
+          <option value="Acme Skyline">Acme Skyline</option>
+          <option value="Acme Residency">Acme Residency</option>
+          <option value="Acme Heights">Acme Heights</option>
+        </select>
+
+        <label class="sr-only" for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Name *" required />
+
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="Email *" required />
+
+        <label class="sr-only" for="mobile">Mobile Number</label>
+        <input
+          id="mobile"
+          name="mobile"
+          type="tel"
+          placeholder="Mobile Number *"
+          pattern="[0-9]{10}"
+          required
+        />
+
+        <label class="sr-only" for="message">Message</label>
+        <textarea id="message" name="message" rows="4" placeholder="Message *" required></textarea>
+
+        <label class="consent-wrap">
+          <input id="consent" name="consent" type="checkbox" required />
+          <span>
+            By submitting this form, I consent to Acme Realty reaching out to me via Call, SMS,
+            WhatsApp, Email or any other suitable communication channel.
+          </span>
+        </label>
+
+        <div class="captcha-row">
+          <div id="captchaCode" class="captcha-code" aria-live="polite"></div>
+          <button id="refreshCaptcha" class="refresh-captcha" type="button" aria-label="Refresh captcha">
+            &#8635;
+          </button>
+          <label for="captchaInput" class="captcha-label">Please Enter Code:</label>
+          <input id="captchaInput" name="captchaInput" type="text" placeholder="Enter Captcha *" required />
+        </div>
+
+        <p class="error-msg" aria-live="assertive"></p>
+        <p class="success-msg" aria-live="polite"></p>
+
+        <button class="submit-btn" type="submit">SUBMIT</button>
+      </form>
+
+      <p class="support-line">Call us for more information at <a href="tel:+917413993399">+91-741-399-3399</a></p>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
