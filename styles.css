@@ -213,6 +213,31 @@ a {
   font-weight: 800;
 }
 
+.main-enquiry-section {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 24px 170px;
+}
+
+.main-enquiry-card {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  background:
+    linear-gradient(150deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px) 0 0 / 30px 24px,
+    linear-gradient(30deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px) 0 0 / 30px 24px,
+    #f4f4f4;
+  border: 1px solid #d8dadd;
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  padding: 28px 42px 30px;
+}
+
+.main-enquiry-card h2 {
+  margin: 8px 0 18px;
+  text-align: center;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+}
+
 .side-enquire {
   position: fixed;
   top: 50%;
@@ -317,14 +342,18 @@ a {
   cursor: pointer;
 }
 
-#enquiryForm {
+#enquiryForm,
+#mainEnquiryForm {
   display: grid;
   gap: 12px;
 }
 
 #enquiryForm input,
 #enquiryForm select,
-#enquiryForm textarea {
+#enquiryForm textarea,
+#mainEnquiryForm input,
+#mainEnquiryForm select,
+#mainEnquiryForm textarea {
   width: 100%;
   border: 1px solid #bcbec2;
   background: rgba(255, 255, 255, 0.6);
@@ -333,7 +362,8 @@ a {
   font-family: inherit;
 }
 
-#enquiryForm textarea {
+#enquiryForm textarea,
+#mainEnquiryForm textarea {
   resize: vertical;
   min-height: 92px;
 }
@@ -463,7 +493,8 @@ a {
     grid-column: 1 / -1;
   }
 
-  #captchaInput {
+  #captchaInput,
+  #mainCaptchaInput {
     grid-column: 1 / -1;
   }
 
@@ -513,5 +544,9 @@ a {
 
   .enquiry-modal h2 {
     font-size: 2rem;
+  }
+
+  .main-enquiry-card {
+    padding: 16px;
   }
 }

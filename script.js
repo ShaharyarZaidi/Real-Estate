@@ -1,18 +1,33 @@
-let currentCaptcha = "";
+let modalCaptcha = "";
+let mainCaptcha = "";
 
 const openEnquiryBtn = document.getElementById("openEnquiry");
 const openEnquirySideBtn = document.getElementById("openEnquirySide");
 const enquiryModal = document.getElementById("enquiryModal");
 const closeEnquiryBtn = document.getElementById("closeEnquiry");
 const modalOverlay = document.getElementById("modalOverlay");
+
+const enquiryForm = document.getElementById("enquiryForm");
+const projectSelect = document.getElementById("projectSelect");
+const nameInput = document.getElementById("name");
 const captchaCode = document.getElementById("captchaCode");
 const refreshCaptcha = document.getElementById("refreshCaptcha");
 const captchaInput = document.getElementById("captchaInput");
-const enquiryForm = document.getElementById("enquiryForm");
-const errorMsg = document.querySelector(".error-msg");
-const successMsg = document.querySelector(".success-msg");
-const projectSelect = document.getElementById("projectSelect");
-const nameInput = document.getElementById("name");
+const modalErrorMsg = enquiryModal.querySelector(".error-msg");
+const modalSuccessMsg = enquiryModal.querySelector(".success-msg");
+
+const mainEnquiryForm = document.getElementById("mainEnquiryForm");
+const mainProjectSelect = document.getElementById("mainProjectSelect");
+const mainNameInput = document.getElementById("mainName");
+const mainCaptchaCode = document.getElementById("mainCaptchaCode");
+const mainRefreshCaptcha = document.getElementById("mainRefreshCaptcha");
+const mainCaptchaInput = document.getElementById("mainCaptchaInput");
+const mainErrorMsg = document.getElementById("mainErrorMsg");
+const mainSuccessMsg = document.getElementById("mainSuccessMsg");
+
+let currentEnquirySource = "Bottom Enquiry CTA";
+let formStartedTracked = false;
+let mainFormStartedTracked = false;
 
 function getPhoneE164India(mobile) {
   const digitsOnly = String(mobile || "").replace(/\D/g, "");
@@ -67,8 +82,17 @@ function identifyWebEngageUser(formData) {
   }
 }
 
-function buildEnquiryPayload(formData, sourceLabel) {
-  const projectName = String(formData.get("project") || projectSelect.value || "").trim();
+function submitSuccessFlow(formData, sourceLabel, fallbackProjectName) {
+  identifyWebEngageUser(formData);
+  const payload = buildEnquiryPayload(formData, sourceLabel, fallbackProjectName);
+  trackWebEngageEvent("Enquire Now Form Filled", payload);
+  setTimeout(() => {
+    window.location.href = "thank-you.html";
+  }, 150);
+}
+
+function buildEnquiryPayload(formData, sourceLabel, fallbackProjectName) {
+  const projectName = String(formData.get("project") || fallbackProjectName || "").trim();
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim();
   const mobile = String(formData.get("mobile") || "").trim();
@@ -90,29 +114,41 @@ function generateCaptcha() {
   return String(Math.floor(1000 + Math.random() * 9000));
 }
 
-function renderCaptcha(code) {
-  captchaCode.textContent = code.split("").join(" ");
+function renderCaptcha(targetEl, code) {
+  if (!targetEl) {
+    return;
+  }
+  targetEl.textContent = code.split("").join(" ");
 }
 
-function setCaptcha() {
-  currentCaptcha = generateCaptcha();
-  renderCaptcha(currentCaptcha);
+function setModalCaptcha() {
+  modalCaptcha = generateCaptcha();
+  renderCaptcha(captchaCode, modalCaptcha);
 }
 
-function clearMessages() {
-  errorMsg.textContent = "";
-  successMsg.textContent = "";
+function setMainCaptcha() {
+  mainCaptcha = generateCaptcha();
+  renderCaptcha(mainCaptchaCode, mainCaptcha);
 }
 
-function openModal(sourceLabel) {
+function clearMessages(errorEl, successEl) {
+  if (errorEl) {
+    errorEl.textContent = "";
+  }
+  if (successEl) {
+    successEl.textContent = "";
+  }
+}
+
+function openModal() {
   enquiryModal.hidden = false;
   modalOverlay.hidden = false;
   document.body.style.overflow = "hidden";
-  clearMessages();
+  clearMessages(modalErrorMsg, modalSuccessMsg);
   captchaInput.value = "";
-  setCaptcha();
+  setModalCaptcha();
   setTimeout(() => {
-    document.getElementById("projectSelect").focus();
+    projectSelect.focus();
   }, 0);
 }
 
@@ -120,17 +156,17 @@ function closeModal() {
   enquiryModal.hidden = true;
   modalOverlay.hidden = true;
   document.body.style.overflow = "";
-  clearMessages();
+  clearMessages(modalErrorMsg, modalSuccessMsg);
 }
 
-function validateForm() {
-  const formData = new FormData(enquiryForm);
+function validateForm(form, expectedCaptcha, captchaFieldName) {
+  const formData = new FormData(form);
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim();
   const mobile = String(formData.get("mobile") || "").trim();
   const message = String(formData.get("message") || "").trim();
   const consent = formData.get("consent");
-  const captchaValue = String(formData.get("captchaInput") || "").trim();
+  const captchaValue = String(formData.get(captchaFieldName) || "").trim();
 
   if (!name || !email || !mobile || !message) {
     return { valid: false, message: "Please fill all required fields." };
@@ -152,7 +188,7 @@ function validateForm() {
     return { valid: false, message: "Please enter the captcha code." };
   }
 
-  if (captchaValue !== currentCaptcha) {
+  if (captchaValue !== expectedCaptcha) {
     return { valid: false, message: "Captcha does not match. Please try again." };
   }
 
@@ -161,43 +197,45 @@ function validateForm() {
 
 openEnquiryBtn.addEventListener("click", () => {
   const sourceLabel = "Bottom Enquiry CTA";
-  const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel);
+  const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel, projectSelect.value);
   trackWebEngageEvent("Enquire Now Clicked", {
     Source: payload.Source,
     "Project Name": payload["Project Name"],
   });
   formStartedTracked = false;
   currentEnquirySource = sourceLabel;
-  openModal("Bottom Enquiry CTA");
+  openModal();
 });
 
 openEnquirySideBtn.addEventListener("click", () => {
   const sourceLabel = "Side Enquire CTA";
-  const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel);
+  const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel, projectSelect.value);
   trackWebEngageEvent("Enquire Now Clicked", {
     Source: payload.Source,
     "Project Name": payload["Project Name"],
   });
   formStartedTracked = false;
   currentEnquirySource = sourceLabel;
-  openModal("Side Enquire CTA");
+  openModal();
 });
+
 closeEnquiryBtn.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", closeModal);
 refreshCaptcha.addEventListener("click", () => {
   captchaInput.value = "";
-  setCaptcha();
-  clearMessages();
+  setModalCaptcha();
+  clearMessages(modalErrorMsg, modalSuccessMsg);
 });
-
-let currentEnquirySource = "Bottom Enquiry CTA";
-let formStartedTracked = false;
 
 nameInput.addEventListener("input", () => {
   if (formStartedTracked || !nameInput.value.trim()) {
     return;
   }
-  const payload = buildEnquiryPayload(new FormData(enquiryForm), currentEnquirySource);
+  const payload = buildEnquiryPayload(
+    new FormData(enquiryForm),
+    currentEnquirySource,
+    projectSelect.value
+  );
   trackWebEngageEvent("Enquire Now Form Started", {
     Source: payload.Source,
     "Project Name": payload["Project Name"],
@@ -213,20 +251,55 @@ document.addEventListener("keydown", (event) => {
 
 enquiryForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  clearMessages();
+  clearMessages(modalErrorMsg, modalSuccessMsg);
 
-  const result = validateForm();
+  const result = validateForm(enquiryForm, modalCaptcha, "captchaInput");
   if (!result.valid) {
-    errorMsg.textContent = result.message || "Unable to submit form.";
+    modalErrorMsg.textContent = result.message || "Unable to submit form.";
     return;
   }
 
   const formData = new FormData(enquiryForm);
-  identifyWebEngageUser(formData);
-  const payload = buildEnquiryPayload(formData, currentEnquirySource);
-  trackWebEngageEvent("Enquire Now Form Filled", payload);
-
-  window.location.href = "thank-you.html";
+  submitSuccessFlow(formData, currentEnquirySource, projectSelect.value);
 });
 
-setCaptcha();
+if (mainEnquiryForm) {
+  mainNameInput.addEventListener("input", () => {
+    if (mainFormStartedTracked || !mainNameInput.value.trim()) {
+      return;
+    }
+    const payload = buildEnquiryPayload(
+      new FormData(mainEnquiryForm),
+      "Main website",
+      mainProjectSelect.value
+    );
+    trackWebEngageEvent("Enquire Now Form Started", {
+      Source: payload.Source,
+      "Project Name": payload["Project Name"],
+    });
+    mainFormStartedTracked = true;
+  });
+
+  mainRefreshCaptcha.addEventListener("click", () => {
+    mainCaptchaInput.value = "";
+    setMainCaptcha();
+    clearMessages(mainErrorMsg, mainSuccessMsg);
+  });
+
+  mainEnquiryForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    clearMessages(mainErrorMsg, mainSuccessMsg);
+
+    const result = validateForm(mainEnquiryForm, mainCaptcha, "mainCaptchaInput");
+    if (!result.valid) {
+      mainErrorMsg.textContent = result.message || "Unable to submit form.";
+      return;
+    }
+
+    const formData = new FormData(mainEnquiryForm);
+    submitSuccessFlow(formData, "Main website", mainProjectSelect.value);
+  });
+}
+
+setModalCaptcha();
+setMainCaptcha();

@@ -132,6 +132,70 @@
       <section class="content-pad">
         <h2>ACME REALTY: A GLANCE</h2>
       </section>
+
+      <section class="main-enquiry-section" aria-labelledby="mainEnquiryTitle">
+        <div class="main-enquiry-card">
+          <h2 id="mainEnquiryTitle">Enquire Now</h2>
+          <form id="mainEnquiryForm" novalidate>
+            <label class="sr-only" for="mainProjectSelect">Project</label>
+            <select id="mainProjectSelect" name="project" required>
+              <option value="Acme Skyline">Acme Skyline</option>
+              <option value="Acme Residency">Acme Residency</option>
+              <option value="Acme Heights">Acme Heights</option>
+            </select>
+
+            <label class="sr-only" for="mainName">Name</label>
+            <input id="mainName" name="name" type="text" placeholder="Name *" required />
+
+            <label class="sr-only" for="mainEmail">Email</label>
+            <input id="mainEmail" name="email" type="email" placeholder="Email *" required />
+
+            <label class="sr-only" for="mainMobile">Mobile Number</label>
+            <input
+              id="mainMobile"
+              name="mobile"
+              type="tel"
+              placeholder="Mobile Number *"
+              pattern="[0-9]{10}"
+              required
+            />
+
+            <label class="sr-only" for="mainMessage">Message</label>
+            <textarea id="mainMessage" name="message" rows="4" placeholder="Message *" required></textarea>
+
+            <label class="consent-wrap">
+              <input id="mainConsent" name="consent" type="checkbox" required />
+              <span>
+                By submitting this form, I consent to Acme Realty reaching out to me via Call, SMS,
+                WhatsApp, Email or any other suitable communication channel.
+              </span>
+            </label>
+
+            <div class="captcha-row">
+              <div id="mainCaptchaCode" class="captcha-code" aria-live="polite"></div>
+              <button id="mainRefreshCaptcha" class="refresh-captcha" type="button" aria-label="Refresh captcha">
+                &#8635;
+              </button>
+              <label for="mainCaptchaInput" class="captcha-label">Please Enter Code:</label>
+              <input
+                id="mainCaptchaInput"
+                name="mainCaptchaInput"
+                type="text"
+                placeholder="Enter Captcha *"
+                required
+              />
+            </div>
+
+            <p id="mainErrorMsg" class="error-msg" aria-live="assertive"></p>
+            <p id="mainSuccessMsg" class="success-msg" aria-live="polite"></p>
+
+            <button class="submit-btn" type="submit">SUBMIT</button>
+          </form>
+          <p class="support-line">
+            Call us for more information at <a href="tel:+917413993399">+91-741-399-3399</a>
+          </p>
+        </div>
+      </section>
     </main>
 
     <button id="openEnquirySide" class="side-enquire" aria-label="Open enquiry form">
