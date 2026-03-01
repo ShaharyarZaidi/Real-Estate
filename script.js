@@ -303,3 +303,15 @@ if (mainEnquiryForm) {
 
 setModalCaptcha();
 setMainCaptcha();
+
+window.addEventListener("load", () => {
+  const sourceLabel = "Main website";
+  const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel, projectSelect.value);
+  trackWebEngageEvent("Enquire Now Clicked", {
+    Source: payload.Source,
+    "Project Name": payload["Project Name"],
+  });
+  formStartedTracked = false;
+  currentEnquirySource = sourceLabel;
+  openModal();
+});
