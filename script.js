@@ -1,5 +1,6 @@
 let modalCaptcha = "";
 let mainCaptcha = "";
+const POPUP_SOURCE = "Popup";
 
 const openEnquiryBtn = document.getElementById("openEnquiry");
 const openEnquirySideBtn = document.getElementById("openEnquirySide");
@@ -25,7 +26,7 @@ const mainCaptchaInput = document.getElementById("mainCaptchaInput");
 const mainErrorMsg = document.getElementById("mainErrorMsg");
 const mainSuccessMsg = document.getElementById("mainSuccessMsg");
 
-let currentEnquirySource = "Bottom Enquiry CTA";
+let currentEnquirySource = POPUP_SOURCE;
 let formStartedTracked = false;
 let mainFormStartedTracked = false;
 
@@ -196,7 +197,7 @@ function validateForm(form, expectedCaptcha, captchaFieldName) {
 }
 
 openEnquiryBtn.addEventListener("click", () => {
-  const sourceLabel = "Bottom Enquiry CTA";
+  const sourceLabel = POPUP_SOURCE;
   const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel, projectSelect.value);
   trackWebEngageEvent("Enquire Now Clicked", {
     Source: payload.Source,
@@ -208,7 +209,7 @@ openEnquiryBtn.addEventListener("click", () => {
 });
 
 openEnquirySideBtn.addEventListener("click", () => {
-  const sourceLabel = "Side Enquire CTA";
+  const sourceLabel = POPUP_SOURCE;
   const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel, projectSelect.value);
   trackWebEngageEvent("Enquire Now Clicked", {
     Source: payload.Source,
@@ -305,7 +306,7 @@ setModalCaptcha();
 setMainCaptcha();
 
 window.addEventListener("load", () => {
-  const sourceLabel = "Main website";
+  const sourceLabel = POPUP_SOURCE;
   const payload = buildEnquiryPayload(new FormData(enquiryForm), sourceLabel, projectSelect.value);
   trackWebEngageEvent("Enquire Now Clicked", {
     Source: payload.Source,
